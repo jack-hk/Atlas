@@ -1,0 +1,20 @@
+<!-- Infobox Section -->
+<div class="infobox">
+  {{ if .Get "name" }}
+      <div class="infobox-section">
+          <span class="infobox-key">Name:</span> {{ .Get "name" }}
+      </div>
+  {{ end }}
+
+  {{ if .Get "type" }}
+      <div class="infobox-section">
+          <span class="infobox-key">Type:</span> {{ .Get "type" }}
+      </div>
+  {{ end }}
+
+  {{ if .Get "class" }}
+      <div class="infobox-section">
+          <span class="infobox-key">Class:</span> {{ .Get "class" }}
+      </div>
+  {{ end }}
+</div>

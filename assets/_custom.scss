@@ -1,0 +1,49 @@
+/* You can add custom styles here. */
+
+// @import "plugins/numbered";
+
+// hr - change at a later date
+.atlas-title {
+    margin: 0px 0px 4px 0px;
+}
+.atlas-header {
+    border-bottom: 1px solid #8e8e8e;
+    margin: 0px 0px 40px 0px;
+}
+
+// infobox parameter
+.infobox {
+    border: 1px solid #aaa;
+    padding: 10px;
+    font-size: 0.9em;
+    width: 280px;
+    margin: 0 0 10px 20px;
+    border-radius: 5px;
+    float: right; /* This makes the box float to the right */
+    clear: both; /* Ensures the box doesn't interfere with other floated elements */
+  }
+  
+  .infobox-section {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .infobox-section:last-child {
+    border-bottom: none;
+  }
+  
+  .infobox-key {
+    font-weight: bold;
+    margin-right: 5px;
+  }
+
+  /* Mobile styles to center and resize */
+@media (max-width: 768px) {
+  .infobox {
+      width: 90%; /* Adjust width to take most of the screen */
+      margin: 1em auto; /* Center the infobox */
+      float: none; /* Remove floating on mobile */
+      clear: both;
+  }
+}
+  

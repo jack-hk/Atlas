@@ -1,0 +1,12 @@
+{{ define "main" }}
+<div class="atlas-header"> <!-- Line Break -->
+  <h1 class="atlas-title">{{ partial "docs/title.html" . }}</h1>
+  </div>
+<article class="markdown book-post">
+  {{- .Content -}}
+</article>
+{{ end }}
+
+{{ define "toc" }}
+  {{ partial "docs/toc" . }}
+{{ end }}
