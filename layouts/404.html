@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ .Site.Language.Lang }}">
-
   <head>
-    {{ partial "docs/html-head" . }}
-    {{ partial "docs/inject/head" . }}
-
+    {{ partial "html-head" . }}
     <style>
       .not-found {
         text-align: center;
@@ -27,8 +24,6 @@
         </h3>
       </div>
     </main>
-
-    {{ partial "docs/inject/body" . }}
   </body>
 
   </html>

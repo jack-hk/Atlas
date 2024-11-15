@@ -1,12 +1,22 @@
-{{ define "main" }}
-<div class="atlas-header"> <!-- Line Break -->
-  <h1 class="atlas-title">{{ partial "docs/title.html" . }}</h1>
-  </div>
+{{ define "main" }} <!-- SAME AS page/single.html... FIX DUIPLICATES -->
+<h1 class="wiki-title">
+    {{ if .Params.header }}
+      {{ .Params.header }}
+    {{ else }}
+      {{ partial "title" . }}
+    {{ end }}
+  </h1>
 <article class="markdown book-post">
   {{- .Content -}}
+  <br>
 </article>
+{{ partial "see-also" . }}
 {{ end }}
 
-{{ define "toc" }}
-  {{ partial "docs/toc" . }}
+{{ define "footer" }}
+<!-- Do nothing, effectively removing the footer -->
+{{ end }}
+
+{{ define "comments" }}
+<!-- Do nothing, effectively removing the comments -->
 {{ end }}

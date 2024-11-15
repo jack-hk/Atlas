@@ -1,9 +1,9 @@
 <div class="flex align-center justify-between">
-  <label for="menu-control">
+  <label for="menu-control" class="atlas-control">
     <img src="{{ "svg/menu.svg" | relURL }}" class="book-icon" alt="Menu" />
   </label>
 
-  <label for="toc-control">
+  <label for="toc-control" class="atlas-control">
     {{ if default true (default .Site.Params.BookToC .Params.BookToC) }}
     <img src="{{ "svg/toc.svg" | relURL }}" class="book-icon" alt="Table of Contents" />
     {{ end }}

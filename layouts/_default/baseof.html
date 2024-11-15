@@ -1,76 +1,45 @@
 <!DOCTYPE html>
 <html lang="{{ default .Site.Language.Lang .Site.LanguageCode  }}" dir="{{ default "ltr" .Site.Language.LanguageDirection }}">
 <head>
-  {{ partial "docs/html-head" . }}
-  {{ partial "docs/inject/head" . }}
+  {{ partial "html-head" . }}
 </head>
-<body dir="{{ default "ltr" .Site.Language.LanguageDirection }}">
+<body class="atlas-background" dir="{{ default "ltr" .Site.Language.LanguageDirection }}">
   <input type="checkbox" class="hidden toggle" id="menu-control" />
   <input type="checkbox" class="hidden toggle" id="toc-control" />
+
+  <header class="atlas-header" id="header">
+    <div class="book-control">
+      {{ partial "control" . }} <!-- Mobile Controls  -->
+      {{ if default true (default .Site.Params.BookToC .Params.BookToC) }}
+      <aside class="hidden clearfix">
+        {{ template "toc" . }} 
+      </aside>
+      {{ end }} 
+    </div>
+  </header>
+
   <main class="container flex">
     <aside class="book-menu">
       <div class="book-menu-content">
-        {{ template "menu" . }} <!-- Left menu Content -->
+        {{ partial "menu" . }} <!-- Navigation Menu (LEFT) -->
       </div>
     </aside>
-
-    <div class="book-page">
-      <header class="book-header">
-        {{ template "header" . }} <!-- Mobile layout header -->
-      </header>
-
-      {{ partial "docs/inject/content-before" . }}
+    <div class="book-view">
       {{ template "main" . }} <!-- Page Content -->
-      {{ partial "docs/inject/content-after" . }}
-
-      <footer class="book-footer">
-        {{ template "footer" . }} <!-- Footer under page content -->
-        {{ partial "docs/inject/footer" . }}
-      </footer>
-
-      {{ template "comments" . }} <!-- Comments block -->
-
+      {{ template "footer" . }}
+      {{ template "comments" . }}
       <label for="menu-control" class="hidden book-menu-overlay"></label>
     </div>
-
-    <aside class="book-toc"> <!-- ToC placement always there -->
     {{ if default true (default .Site.Params.BookToC .Params.BookToC) }}
-      <div class="book-toc-content">
-        {{ template "toc" . }} <!-- Table of Contents -->
-      </div>
+    <aside class="book-toc"> <!-- ToC placement always there -->
+        <div class="book-toc-content">
+          {{ template "toc" . }} <!-- Table of Contents -->
+        </div>
+    </aside>
     {{ end }}
-  </aside>
-  </main>
-
-  {{ partial "docs/inject/body" . }}
+    </main>
 </body>
 </html>
-
-{{ define "menu" }}
-  {{ partial "docs/menu" . }}
-{{ end }}
-
-{{ define "header" }}
-  {{ partial "docs/header" . }}
-
-  {{ if default true (default .Site.Params.BookToC .Params.BookToC) }}
-  <aside class="hidden clearfix">
-    {{ template "toc" . }}
-  </aside>
-  {{ end }}
-{{ end }}
-
-{{ define "footer" }}
-  {{ partial "docs/footer" . }}
-{{ end }}
-
-{{ define "comments" }}
-  {{ if and .Content (default true (default .Site.Params.BookComments .Params.BookComments)) }}
-  <div class="book-comments">
-    {{- partial "docs/comments" . -}}
-  </div>
-  {{ end }}
-{{ end }}
 
 {{ define "main" }}
   <article class="markdown book-article">
@@ -79,5 +48,19 @@
 {{ end }}
 
 {{ define "toc" }}
-  {{ partial "docs/toc" . }}
+  {{ partial "toc" . }}
+{{ end }}
+
+{{ define "footer" }}
+<footer class="book-footer">
+  {{ partial "footer" . }}
+</footer>
+{{ end }}
+ 
+{{ define "comments" }}
+{{ if and .Content (default true (default .Site.Params.BookComments .Params.BookComments)) }}
+<div class="book-comments">
+  {{ template "_internal/disqus.html" . }} <!-- Comments block -->
+</div>
+{{ end }}
 {{ end }}

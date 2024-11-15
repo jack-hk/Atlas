@@ -1,1 +1,16 @@
-{{ define "dummy" }}{{ end }}
+{{ define "main" }} <!-- SAME AS wiki/single.html... FIX DUIPLICATES -->
+  <h1 class="page-title">
+    {{ if .Params.header }}
+      {{ .Params.header }}
+    {{ else }}
+      {{ partial "title" . }}
+    {{ end }}
+  </h1>
+<article class="markdown book-post">
+  {{- .Content -}}
+</article>
+{{ end }}
+
+{{ define "toc" }}
+  {{ partial "toc" . }}
+{{ end }}
