@@ -4,6 +4,7 @@
   {{ partial "html-head" . }}
 </head>
 <body class="atlas-background" dir="{{ default "ltr" .Site.Language.LanguageDirection }}">
+  <div id="theme-overlay"></div>
   <input type="checkbox" class="hidden toggle" id="menu-control" />
   <input type="checkbox" class="hidden toggle" id="toc-control" />
 
@@ -15,13 +16,14 @@
         {{ template "toc" . }} 
       </aside>
       {{ end }} 
-    </div>
+    </div> 
   </header>
 
   <main class="container flex">
     <aside class="book-menu">
       <div class="book-menu-content">
         {{ partial "menu" . }} <!-- Navigation Menu (LEFT) -->
+        {{ partial "theme-toggle" . }} <!-- NEEDS TO BE PROPERLY IMPLEMENTED AT A LATER DATE !!! --> <!-- NEEDS TO BE PROPERLY IMPLEMENTED AT A LATER DATE !!! -->
       </div>
     </aside>
     <div class="book-view">

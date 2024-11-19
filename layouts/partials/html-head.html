@@ -38,6 +38,10 @@
   <script defer src="{{ $swJS.RelPermalink }}" {{ template "integrity" $swJS }}></script>
 {{ end -}}
 
+<!-- NEEDS TO BE PROPERLY IMPLEMENTED AT A LATER DATE !!! --> <!-- NEEDS TO BE PROPERLY IMPLEMENTED AT A LATER DATE !!! -->
+{{- $themeJS := resources.Get "theme.js" | resources.ExecuteAsTemplate "theme.js" . | resources.Minify | resources.Fingerprint }}
+<script src="{{ $themeJS.RelPermalink }}"></script>
+
 {{- template "_internal/google_analytics.html" . -}}
 
 <!-- RSS -->
