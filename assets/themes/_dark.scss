@@ -1,9 +1,0 @@
-body {
-  &.light-mode {
-      @include theme-light;
-  }
-
-  &.dark-mode {
-      @include theme-dark;
-  }
-}

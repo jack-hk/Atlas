@@ -1,4 +1,4 @@
-{{ define "main" }} <!-- SAME AS page/single.html... FIX DUIPLICATES -->
+{{ define "main" }}
 <h1 class="wiki-title">
     {{ if .Params.header }}
       {{ .Params.header }}
@@ -10,13 +10,16 @@
   {{- .Content -}}
   <br>
 </article>
-{{ partial "see-also" . }}
+
+{{- /* Template Definitions */}}
+
+{{ partial "see-also" . }} 
 {{ end }}
 
 {{ define "footer" }}
-<!-- Do nothing, effectively removing the footer -->
+<!-- Do nothing, effectively removing the comments -->
 {{ end }}
 
 {{ define "comments" }}
-<!-- Do nothing, effectively removing the comments -->
+<!-- Do nothing -->
 {{ end }}

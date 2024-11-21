@@ -1,31 +1,38 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="{{ default .Summary .Description }}">
-<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
-<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
-<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="{{ site.Params.assets.theme_color | default "#2e2e33" }}">
 
-{{- with .Page.Params.BookHref -}}
-  <meta http-equiv="Refresh" content="0; url='{{ . }}'" />
-{{- end -}}
+{{- /* Prevents FOUC before theme is loaded. */}}
+<style>
+  body.dark {
+    background-color: #141414;
+  }
+</style>
 
-{{- template "_internal/opengraph.html" . -}}
+{{- /* Stylesheet. You can make "custom.scss" inside your website for more customisation. */}}
+{{- $styles := resources.Get "book.scss" | resources.ExecuteAsTemplate "book.scss" . | css.Sass | resources.Minify | resources.Fingerprint }}
+<link rel="stylesheet" href="{{ $styles.RelPermalink }}" {{ template "integrity" $styles }}>
 
+{{- /* Title */}}
 <title>{{ partial "html-head-title" . }}</title>
 
+{{- /* Meta */}}
+<meta name="description" content="{{ default .Summary .Description }}">
 {{- $manifest := resources.Get "manifest.json" | resources.ExecuteAsTemplate "manifest.json" . }}
 <link rel="manifest" href="{{ $manifest.RelPermalink }}">
 <link rel="icon" href="{{ .Site.Params.BookFavicon | default "favicon.png" | relURL }}" >
 <link rel="canonical" href="{{ .Permalink }}">
 
+{{- with .Page.Params.BookHref -}}
+  <meta http-equiv="Refresh" content="0; url='{{ . }}'" />
+{{- end -}}
+
+{{- /* Translations */}}
 {{- range .Translations }}
   <link rel="alternate" hreflang="{{ default .Language.Lang .Site.LanguageCode }}" href="{{ .Permalink }}" title="{{ partial "title" . }}">
 {{- end -}}
 
-<!-- Theme stylesheet, you can customize scss by creating `assets/custom.scss` in your website -->
-{{- $styles := resources.Get "book.scss" | resources.ExecuteAsTemplate "book.scss" . | css.Sass | resources.Minify | resources.Fingerprint }}
-<link rel="stylesheet" href="{{ $styles.RelPermalink }}" {{ template "integrity" $styles }}>
-
+{{- /* Search */}}
 {{- if default true .Site.Params.BookSearch -}}
   {{- $searchJSFile := printf "%s.search.js" .Language.Lang }}
   {{- $searchJS := resources.Get "search.js" | resources.ExecuteAsTemplate $searchJSFile . | resources.Minify | resources.Fingerprint }}
@@ -38,24 +45,64 @@
   <script defer src="{{ $swJS.RelPermalink }}" {{ template "integrity" $swJS }}></script>
 {{ end -}}
 
-<!-- NEEDS TO BE PROPERLY IMPLEMENTED AT A LATER DATE !!! --> <!-- NEEDS TO BE PROPERLY IMPLEMENTED AT A LATER DATE !!! -->
-{{- $themeJS := resources.Get "theme.js" | resources.ExecuteAsTemplate "theme.js" . | resources.Minify | resources.Fingerprint }}
-<script src="{{ $themeJS.RelPermalink }}"></script>
-
-{{- template "_internal/google_analytics.html" . -}}
-
-<!-- RSS -->
+{{- /* RSS */}}
 {{- with .OutputFormats.Get "rss" -}}
   {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
 {{ end -}}
-
-{{ "<!--" | safeHTML }}
-Made with Book Theme
-https://github.com/alex-shpak/hugo-book
-{{ "-->" | safeHTML }}
 
 {{- define "integrity" -}}
   {{- if (urls.Parse .Permalink).Host -}}
     integrity="{{ .Data.Integrity }}" crossorigin="anonymous"
   {{- end -}}
 {{- end -}}
+
+{{- /* Disabled JavaScript: Theme Fallback */}}
+<noscript>
+  <style>
+      @media (prefers-color-scheme: dark) {
+        :root {
+          /* Pallete */
+          --gray-100: rgba(255, 255, 255, 0.1);
+          --gray-200: rgba(255, 255, 255, 0.2);
+          --gray-500: rgba(255, 255, 255, 0.5);
+
+          /* Body */
+          --body-background: #242424;
+          --body-font-color: #f3f3f3;
+
+          /* Links */
+          --color-link: #bd9f2b;
+          --color-visited-link: #bd9f2b;
+          --book-menu-content-bg: linear-gradient(0deg, rgba(247,247,247,0) 0%, #171717 7%, #292929 67%, rgba(247,247,247,0) 100%);
+
+          /* Hints */
+          --hint-color-info: #6bf;
+          --hint-color-warning: #fd6;
+          --hint-color-danger: #f66;
+
+          /* Infobox */
+          --infobox-font-color: #f3f3f3;
+          --infobox-header-color: #151515;
+          --infobox-divider-color: #1a1a1a;
+          --infobox-cell-color: rgb(39, 39, 39);
+          --infobox-border: 1px solid #ffffff;
+
+          /* Images */
+          --atlas-background-image: url(images/background-dark.webp);
+          --atlas-header-image: url(images/header-dark.webp);
+
+          /* Effects */
+          --atlas-logo-filter: grayscale(100%) contrast(1.1) brightness(0.9);
+          --atlas-control-bg: radial-gradient(circle, #171717 0%, #171717 50%, rgba(255,255,255,0) 100%);
+
+          --icon-filter: brightness(0) invert(0.9);
+      }
+  }
+  </style>
+</noscript>
+
+{{- /* Misc */}}
+{{- if hugo.IsProduction | or (eq site.Params.env "production") }}
+{{- template "_internal/opengraph.html" . -}}
+{{- template "_internal/google_analytics.html" . -}}
+{{- end }}

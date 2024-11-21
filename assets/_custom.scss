@@ -2,20 +2,6 @@
 
 // @import "plugins/numbered";
 
-/* This is for the overlay which appears when the theme is changed */
-#theme-overlay {
-  background: $theme-transition-color;
-  height: 100%;
-  left: 0;
-  opacity: 0; /* Initially transparent */
-  pointer-events: none; /* Allow interactions to pass through */
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 9999; /* Ensure it's on top */
-  transition: opacity 0.5s ease-in-out; /* Smooth fade-in/out effect */
-}
-
 .atlas-background {
   background-image: var(--atlas-background-image);
 }
