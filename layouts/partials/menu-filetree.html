@@ -28,12 +28,33 @@
   {{ $current := eq .CurrentPage .Page }}
   {{ $ancestor := .Page.IsAncestor .CurrentPage }}
 
+  {{/* Accessibility */}}
+  {{ $submenulabel := printf "Toggle submenu for %s" (partial "title" .Page) }}
   {{ if .Page.Params.BookCollapseSection }}
-    <input type="checkbox" id="section-{{ md5 .Page }}" class="toggle" {{ if or $current $ancestor }}checked{{ end }} />
-    <label for="section-{{ md5 .Page }}" class="flex justify-between">
-      <a {{ if .Page.Content }}href="{{ .Page.RelPermalink }}"{{ else }}role="button"{{ end }} class="{{ if $current }}active{{ end }}">
-        {{- partial "title" .Page -}}
-      </a>
+    <input type="checkbox" id="section-{{ md5 .Page }}" class="toggle" {{ if or $current $ancestor }}checked{{ end }} tabindex="-1" aria-hidden="true"/>
+    <label class="flex justify-between">
+    {{ if .Page.Content }}
+    <a href="{{ .Page.RelPermalink }}" class="{{ if $current }}active{{ end }}">
+    {{- partial "title" .Page -}}
+    </a>
+    <button aria-label="{{ $submenulabel }}" onclick="document.getElementById('section-{{ md5 .Page }}').click();" class="menu-button {{ if $current }}active{{ end }}">
+    </button>
+
+    {{/* No Javascript Fallback. Uses label */}}
+    <noscript>
+    <label role="button" for="section-{{ md5 .Page }}">more</label>
+    </noscript>
+    
+    {{ else }}
+    <button aria-label="{{ $submenulabel }}" onclick="document.getElementById('section-{{ md5 .Page }}').click();" class="menu-button {{ if $current }}active{{ end }}">
+    {{- partial "title" .Page -}}
+    </button>
+    {{ end }}
+
+    {{/* ... */}}
+    <noscript>
+    <label role="button" for="section-{{ md5 .Page }}">more</label>
+    </noscript>
     </label>
   {{ else if .Page.Params.BookHref }}
     <a href="{{ .Page.Params.BookHref }}" class="{{ if $current }}active{{ end }}" target="_blank" rel="noopener">

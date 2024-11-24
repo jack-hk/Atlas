@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="{{ default .Site.Language.Lang .Site.LanguageCode  }}" dir="{{ default "ltr" .Site.Language.LanguageDirection }}">
 <head>
-  {{ partial "html-head" . }}
+  {{ partial "head" . }}
 </head>
 <body class="atlas-background" dir="{{ default "ltr" .Site.Language.LanguageDirection }}">
-  <input type="checkbox" class="hidden toggle" id="menu-control" />
-  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <input type="checkbox" class="hidden toggle" id="menu-control" tabindex="-1" aria-hidden="true"/>
+  <input type="checkbox" class="hidden toggle" id="toc-control" tabindex="-1" aria-hidden="true"/>
 
   <header class="atlas-header" id="header">
     <div class="book-control">
@@ -26,6 +26,10 @@
       } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
           document.body.classList.add('dark');
       }
+      /* Page Width Detection */
+      if (localStorage.getItem('isScaled') === 'true') {
+        document.body.classList.add('scaled');
+      }
   </script>
   </header>
 
@@ -33,9 +37,12 @@
     <aside class="book-menu">
       <div class="book-menu-content">
         {{ partial "menu" . }} {{- /* Navigation Menu */}}
-        <button id="theme-toggle" aria-label="Toggle dark mode" style="background-color: transparent; border: 0px; padding: 5px;">
+        <button id="theme-toggle" aria-label="Toggle dark mode" style="background-color: transparent; border: 0px; padding: 5px; cursor: pointer;">
           🌓
         </button>
+        <button id="rescale-toggle" aria-label="Toggle page width" style="background-color: transparent; border: 0px; padding: 5px; cursor: pointer;">
+          ↔️
+        </button>      
       </div>
     </aside>
     <div class="book-view">
@@ -64,8 +71,13 @@
           localStorage.setItem("pref-theme", "dark");
         }
       });
+    /* Page Width Toggle */
+      document.getElementById('rescale-toggle').addEventListener('click', () => {
+        const body = document.body;
+        const isScaled = body.classList.toggle('scaled');
+        localStorage.setItem('isScaled', isScaled);
+      });
     </script>
-
 </body>
 </html>
 

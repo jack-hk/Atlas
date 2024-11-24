@@ -34,6 +34,15 @@ $body-font-weight: normal !default;
 $body-min-width: 20rem !default;
 $container-max-width: 80rem !default;
 
+@media screen and (min-width: $container-max-width) {
+/* When "unlimited" mode is active */
+body.scaled .container {
+  max-width: none;
+  margin-left: 30px;
+}
+}
+
+
 /* Page layout sizing */
 $header-height: 3.5rem !default;
 $menu-width: 13.5rem !default;

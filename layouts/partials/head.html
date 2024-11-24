@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="{{ $styles.RelPermalink }}" {{ template "integrity" $styles }}>
 
 {{- /* Title */}}
-<title>{{ partial "html-head-title" . }}</title>
+<title>{{ partial "title" . }}</title>
 
 {{- /* Meta */}}
 <meta name="description" content="{{ default .Summary .Description }}">
