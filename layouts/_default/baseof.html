@@ -36,21 +36,23 @@
   <main class="container flex">
     <aside class="book-menu">
       <div class="book-menu-content">
-        {{ partial "menu" . }} {{- /* Navigation Menu */}}
-        <button id="theme-toggle" aria-label="Toggle dark mode" style="background-color: transparent; border: 0px; padding: 5px; cursor: pointer;">
-          🌓
-        </button>
-        <button id="rescale-toggle" aria-label="Toggle page width" style="background-color: transparent; border: 0px; padding: 5px; cursor: pointer;">
-          ↔️
-        </button>      
+        {{ partial "menu" . }} {{- /* Navigation Menu */}}  
       </div>
     </aside>
-    <div class="book-view">
+    <div class="book-view">  
       {{ template "main" . }} {{- /* Page Content */}}
       {{ template "footer" . }}
       {{ template "comments" . }}
       <label for="menu-control" class="hidden book-menu-overlay"></label>
     </div>
+    <nav class="header-buttons">
+      <button id="theme-toggle" class="header-button" aria-label="Toggle dark mode">
+      Discussion
+      </button>
+      <button id="rescale-toggle" class="header-button" aria-label="Toggle page width">
+      ↔️
+      </button>  
+    </nav>
     {{ if default true (default .Site.Params.BookToC .Params.BookToC) }}
     <aside class="book-toc">
         <div class="book-toc-content">

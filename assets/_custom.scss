@@ -3,6 +3,26 @@
 // @import "plugins/numbered";
 
 /* BREAKDOWN AND MOVE THIS... */ /* BREAKDOWN AND MOVE THIS... */ /* BREAKDOWN AND MOVE THIS... */
+
+.header-buttons {
+  margin-left: $menu-width;
+  position: absolute;
+}
+
+.header-button {
+  border: 1px; 
+  cursor: pointer;
+  background-color: var(--body-background);
+  padding: 15px;
+  list-style-type: none;
+  color:  var(--body-font-color);
+  box-shadow: 2px black;
+}
+
+.main-page-content{
+  margin-top: $content-book-margin;
+}
+
 .menu-button {
   display: flex; 
   justify-content: space-between; 

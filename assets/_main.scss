@@ -167,6 +167,7 @@ body[dir="rtl"] .book-menu {
 }
 
 .book-view {
+  margin-top: $content-book-margin;
   min-width: $body-min-width;
   flex-grow: 1;
   padding: $padding-16 + $padding-book-view;
